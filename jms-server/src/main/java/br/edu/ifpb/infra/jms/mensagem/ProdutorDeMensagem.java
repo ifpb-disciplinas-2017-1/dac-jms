@@ -1,11 +1,12 @@
-package br.edu.ifpb.infra.jms.email;
+package br.edu.ifpb.infra.jms.mensagem;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.jms.ConnectionFactory;
 import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
+import javax.jms.JMSException;
 import javax.jms.Queue; 
 
 /**
@@ -14,7 +15,7 @@ import javax.jms.Queue;
  * @since 28/09/2017, 07:53:32
  */
 @Stateless
-public class Email {
+public class ProdutorDeMensagem {
 
     @Resource(lookup = "jms/dac/fila")
     private Queue queue;
@@ -24,5 +25,14 @@ public class Email {
 
     public void send(String mensagem) {
         context.createProducer().send(queue, mensagem);
+    }
+     public String lerMensagem() {
+        try {
+            JMSConsumer createConsumer = context.createConsumer(queue);
+            String mensagem = createConsumer.receiveBody(String.class);
+            return String.format("Mensagem:%s lida na fila:%s", mensagem, queue.getQueueName());
+        } catch (JMSException ex) {
+            return ex.getMessage();
+        }
     }
 }

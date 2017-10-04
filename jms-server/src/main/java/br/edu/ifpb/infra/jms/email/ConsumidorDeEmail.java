@@ -13,7 +13,6 @@ import javax.jms.MessageListener;
  * @mail ricardo.job@ifpb.edu.br
  * @since 28/09/2017, 08:15:06
  */
-//@Stateless
 @MessageDriven(
 mappedName = "java:global/jms/topic/aula",
         activationConfig = {
@@ -22,7 +21,7 @@ mappedName = "java:global/jms/topic/aula",
                 @ActivationConfigProperty(propertyName = "messageSelector", propertyValue = "email='job'")
         }
 )
-public class ProcessadorDeEmail implements MessageListener{
+public class ConsumidorDeEmail implements MessageListener{
 
     @Override
     public void onMessage(Message message) {
@@ -30,7 +29,7 @@ public class ProcessadorDeEmail implements MessageListener{
         try {
             System.out.println(message.getBody(String.class));
         } catch (JMSException ex) {
-            Logger.getLogger(ProcessadorDeEmail.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsumidorDeEmail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

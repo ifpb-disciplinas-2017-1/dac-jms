@@ -6,9 +6,10 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h1>Enviar email</h1>
+        <h1>Enviar email com Topic</h1>
         <h:form>
             <h:inputText value="#{controladorDeEmail.mensagem}" />
+            <h:inputText value="#{controladorDeEmail.email}" />
             <h:commandButton value="enviar email" action="#{controladorDeEmail.enviar()}" />
         </h:form>
     </h:body>
